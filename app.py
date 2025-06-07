@@ -1,4 +1,12 @@
 import streamlit as st
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.set_page_config(
     page_title="AI Content Genie",
@@ -129,8 +137,24 @@ elif page == "Plans and Billing":
     """)
 
     selected_plan = st.radio("Select a plan", ["Basic", "Pro", "Premium"])
-    if st.button("Subscribe / Upgrade"):
-        st.success(f"You have selected the {selected_plan} plan. (Payment integration placeholder)")
+    st.markdown(f"### You selected: {selected_plan}")
+
+    st.subheader("Make a Payment")
+    amount = st.number_input("Enter amount (₹)", min_value=0, value=299 if selected_plan=="Basic" else 599 if selected_plan=="Pro" else 999)
+    payment_method = st.selectbox("Select Payment Gateway", ["PhonePe", "Razorpay"])
+    card_number = st.text_input("Card Number", max_chars=16, help="Enter 16-digit card number")
+    cvv = st.text_input("CVV", max_chars=3, type="password", help="Enter 3-digit CVV")
+
+    if st.button("Pay Now"):
+        if amount <= 0:
+            st.error("Please enter a valid amount.")
+        elif len(card_number) != 16 or not card_number.isdigit():
+            st.error("Please enter a valid 16-digit card number.")
+        elif len(cvv) != 3 or not cvv.isdigit():
+            st.error("Please enter a valid 3-digit CVV.")
+        else:
+            # Dummy success message - Replace with real payment integration later
+            st.success(f"Payment of ₹{amount} via {payment_method} successful! 🎉")
 
 elif page == "Chatbot":
     st.title("🤖 Chatbot")
