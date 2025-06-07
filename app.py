@@ -8,12 +8,18 @@ st.set_page_config(
 
 hide_streamlit_style = """
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    /* Hide hamburger menu */
+    #MainMenu {visibility: hidden !important;}
+    /* Hide footer */
+    footer {visibility: hidden !important;}
+    /* Hide header */
+    header {visibility: hidden !important;}
+    /* Also hide the "About" button on sidebar */
+    div[title="Open sidebar"] {display:none !important;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 # Rest of your app code below...
 
