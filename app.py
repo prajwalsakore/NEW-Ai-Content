@@ -48,7 +48,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar content
+# Sidebar content with navigation radio buttons
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/4712/4712100.png", width=80)
     st.markdown("## 🧠 AI Content Genie")
@@ -56,7 +56,7 @@ with st.sidebar:
     st.markdown("---")
     st.caption("🚀 Built with Streamlit + OpenAI")
 
-# Main content based on navigation
+# Main content displayed based on selected page
 if page == "Home":
     st.title("🧠 Welcome to AI Content Genie")
     st.markdown("Use the sidebar to navigate through the app.")
@@ -71,7 +71,15 @@ elif page == "Content Ideas":
 
 elif page == "User Info":
     st.title("📊 User Info")
-    st.markdown("View and manage your user details here.")
+
+    username = st.text_input("Username")
+    full_name = st.text_input("Full Name")
+    email = st.text_input("Email ID")
+    role = st.selectbox("Role", ["Marketer", "Student", "Content Creator", "Other"])
+
+    if st.button("Submit"):
+        st.success(f"Thanks {full_name}! Your details have been recorded.")
+        # You can add code here to save or process user info
 
 elif page == "Plans and Billing":
     st.title("🧾 Plans and Billing")
@@ -80,5 +88,6 @@ elif page == "Plans and Billing":
 elif page == "Chatbot":
     st.title("🤖 Chatbot")
     st.markdown("Chat with the AI-powered assistant.")
+
 
 
