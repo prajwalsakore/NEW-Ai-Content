@@ -1,3 +1,10 @@
+import streamlit as st
+
+st.set_page_config(
+    page_title="AI Content Genie",
+    page_icon="🧠",
+    layout="wide"
+)
 
 hide_streamlit_style = """
     <style>
@@ -7,12 +14,9 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-import streamlit as st
-st.set_page_config(
-    page_title="AI Content Genie",
-    page_icon="🧠",
-    layout="wide"
-)
+
+# Rest of your app code below...
+
 
 # Custom CSS styles
 st.markdown("""
