@@ -48,29 +48,61 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar content with navigation radio buttons
+# Sidebar navigation
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/4712/4712100.png", width=80)
     st.markdown("## 🧠 AI Content Genie")
-    page = st.radio("Navigation", ["Home", "Generate", "Content Ideas", "User Info", "Plans and Billing", "Chatbot"])
+    page = st.radio("Navigation", [
+        "Home",
+        "Generate",
+        "Content Ideas",
+        "User Info",
+        "Plans and Billing",
+        "Chatbot"
+    ])
     st.markdown("---")
     st.caption("🚀 Built with Streamlit + OpenAI")
 
-# Main content displayed based on selected page
+# --- Page content ---
+
 if page == "Home":
     st.title("🧠 Welcome to AI Content Genie")
-    st.markdown("Use the sidebar to navigate through the app.")
+    st.markdown("""
+    Welcome to AI Content Genie, your AI-powered assistant to generate blogs, emails, content ideas, and more.
+    
+    Use the sidebar to explore different features.
+    """)
 
 elif page == "Generate":
     st.title("✍️ Generate Content")
-    st.markdown("Here you can generate blogs, emails, and other content.")
+    st.markdown("Create blog posts, marketing emails, social media captions, and other content here.")
+    
+    prompt = st.text_area("Enter your content prompt")
+    if st.button("Generate"):
+        if prompt.strip() == "":
+            st.warning("Please enter a prompt to generate content.")
+        else:
+            st.info(f"Generating content for prompt: {prompt}")
+            # Call your AI generation logic here and display results
+            st.success("Content generated successfully! (Demo placeholder)")
 
 elif page == "Content Ideas":
     st.title("💡 Content Ideas")
-    st.markdown("Get fresh ideas for your content creation.")
+    st.markdown("""
+    Discover fresh and trending content ideas based on your niche or interests.
+    """)
+    niche = st.text_input("Enter your niche or topic")
+    if st.button("Get Ideas"):
+        if niche.strip() == "":
+            st.warning("Please enter a niche or topic.")
+        else:
+            st.info(f"Fetching content ideas for: {niche}")
+            # Integrate AI or database call here
+            st.success("Here are some content ideas! (Demo placeholder)")
 
 elif page == "User Info":
     st.title("📊 User Info")
+    st.markdown("Provide your details to personalize your experience.")
 
     username = st.text_input("Username")
     full_name = st.text_input("Full Name")
@@ -78,16 +110,40 @@ elif page == "User Info":
     role = st.selectbox("Role", ["Marketer", "Student", "Content Creator", "Other"])
 
     if st.button("Submit"):
-        st.success(f"Thanks {full_name}! Your details have been recorded.")
-        # You can add code here to save or process user info
+        if not username or not full_name or not email:
+            st.error("Please fill in all fields.")
+        else:
+            st.success(f"Thanks {full_name}! Your info has been saved.")
+            # Save or process user info here
 
 elif page == "Plans and Billing":
     st.title("🧾 Plans and Billing")
-    st.markdown("Manage your subscription plans and billing information here.")
+    st.markdown("""
+    Manage your subscription plans and billing here.
+
+    **Available Plans:**
+
+    - **Basic** - ₹299/month
+    - **Pro** - ₹599/month
+    - **Premium** - ₹999/month
+    """)
+
+    selected_plan = st.radio("Select a plan", ["Basic", "Pro", "Premium"])
+    if st.button("Subscribe / Upgrade"):
+        st.success(f"You have selected the {selected_plan} plan. (Payment integration placeholder)")
 
 elif page == "Chatbot":
     st.title("🤖 Chatbot")
     st.markdown("Chat with the AI-powered assistant.")
+
+    user_input = st.text_input("Ask me anything...")
+    if st.button("Send"):
+        if user_input.strip() == "":
+            st.warning("Please enter a message.")
+        else:
+            st.info(f"Chatbot reply to: {user_input}")
+            # Integrate your chatbot backend here
+            st.success("Here is the chatbot response! (Demo placeholder)")
 
 
 
