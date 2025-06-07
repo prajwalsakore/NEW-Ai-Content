@@ -1,67 +1,52 @@
-
-import streamlit as st
-
-st.set_page_config(
-    page_title="AI Content Genie",
-    page_icon="🧠",
-    layout="wide"
-)
-
 st.markdown("""
     <style>
-    .main {
-        background-color: #f9f9f9;
-        padding: 2rem;
-    }
-    .block-container {
-        padding: 2rem 1rem 2rem 1rem;
-    }
-    .stButton>button {
-        background-color: #4CAF50;
-        color: white;
-        border-radius: 10px;
-        height: 3em;
-        font-size: 1.1em;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    .stButton>button:hover {
-        background-color: #45a049;
-    }
-    .stTextInput>div>input {
-        border-radius: 10px;
-        padding: 10px;
-        font-size: 1em;
-    }
-    .stSelectbox>div>div {
-        border-radius: 10px;
-        padding: 10px;
-        font-size: 1em;
-    }
-    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #2c3e50;
-    }
-    .css-1d391kg {
-        background-color: #ffffff !important;
-        border-right: 2px solid #f1f1f1;
-    }
+        [data-testid="stSidebarNav"] {
+            display: none;
+        }
+    </style>
+""", unsafe_allow_html=True)
+import streamlit as st
+from utils import store_user_info
+
+st.set_page_config(page_title="AI Content Genie", layout="wide")
+
+# Apply custom styling
+st.markdown("""
+    <style>
+        .main-title {
+            font-size: 3em;
+            font-weight: bold;
+            color: #FF4B4B;
+        }
+        .sub-title {
+            font-size: 1.5em;
+            color: #cccccc;
+        }
+        .stTextInput > div > div > input {
+            background-color: #262730;
+            color: white;
+        }
+        .stSelectbox > div > div {
+            background-color: #262730;
+            color: white;
+        }
     </style>
 """, unsafe_allow_html=True)
 
-with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/4712/4712100.png", width=80)
-    st.markdown("## 🧠 AI Content Genie")
-    st.markdown("### Navigation:")
-    st.markdown("""
-- 🏠 Home  
-- ✍️ Generate  
-- 💡 Content Ideas  
-- 📊 User Info  
-- 🧾 Plans and Billing  
-- 🤖 Chatbot
-    """)
-    st.markdown("---")
-    st.caption("🚀 Built with Streamlit + OpenAI")
+with st.container():
+    st.markdown('<div class="main-title">🧠 Welcome to AI Content Genie</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-title">Create engaging blogs, emails, captions — powered by AI!</div>', unsafe_allow_html=True)
 
-st.title("🧠 Welcome to AI Content Genie")
-st.markdown("Use the sidebar to navigate through the app.")
+    st.markdown("---")
+    st.subheader("🧑‍💻 Enter Your Details")
+
+    name = st.text_input("👤 Enter your full name")
+    email = st.text_input("📧 Enter your email")
+    role = st.selectbox("💼 What best describes you?", ["Marketer", "Student", "Content Creator", "Business Owner", "Other"])
+
+    if st.button("🚀 Submit"):
+        if name and email:
+            store_user_info(name, email, role)
+            st.success("Your details have been saved!")
+        else:
+            st.warning("Please enter both your name and email.")
